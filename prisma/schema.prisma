@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../server/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Photo {
+  id        Int           @id @default(autoincrement())
+  slug      String        @unique
+  title     String
+  alt       String
+  location  String
+  type      String
+  credit    String
+  source    String
+  width     Int
+  height    Int
+  full      Bytes
+  thumbnail Bytes
+  series    SeriesPhoto[]
+}
+
+model Series {
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique
+  title       String
+  description String
+  position    Int
+  published   Boolean       @default(false)
+  revision    Int           @default(1)
+  photos      SeriesPhoto[]
+
+  @@index([published, position])
+}
+
+model SeriesPhoto {
+  seriesId Int
+  photoId  Int
+  position Int
+  series   Series @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  photo    Photo  @relation(fields: [photoId], references: [id], onDelete: Restrict)
+
+  @@id([seriesId, photoId])
+  @@unique([seriesId, position])
+  @@index([photoId])
+}
+
+model Admin {
+  id           Int    @id
+  email        String @unique
+  passwordHash String
+}
+
+model Session {
+  sid    String   @id @db.VarChar
+  sess   Json     @db.Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire])
+  @@map("session")
+}
