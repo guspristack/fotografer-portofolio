@@ -1,21 +1,28 @@
 # Arka Wijaya · Portofolio Fotografer
 
-Portofolio full-stack dan studio galeri untuk persona fiktif Arka Wijaya dari Ruang Karya. Desain publik mempertahankan galeri lanskap gelap, seri Bromo, penampil foto berukuran besar, dan tautan setiap foto.
+Proyek portofolio full-stack untuk persona fiktif dari seri Ruang Karya karya GuspriStack.
 
-## Studio
+[Lihat demo desain di GuspriStack Showcase](https://showcase.guspriaman.com/portofolio/fotografi/)
 
-- Masuk di `/admin` untuk mengunggah foto, mengisi judul, teks alternatif, lokasi, kredit, dan sumber atau lisensi.
-- Pilih foto dari pustaka, pindahkan urutannya, dan pilih apakah seri tampil di portofolio. Foto pertama menjadi sampul seri. Satu foto dapat dipakai di beberapa seri.
-- Galeri publik hanya membaca seri yang ditampilkan dan foto yang tergabung di dalamnya.
+## Fitur
 
-Foto JPEG, PNG, dan WebP statis diterima hingga 12 MB dan 30 megapiksel per file. Server menghasilkan WebP untuk tampilan besar dan thumbnail, tanpa menyimpan file asli atau metadata kamera. Database PostgreSQL menyimpan kedua ukuran, metadata, urutan seri, dan sesi login.
+- Galeri foto dengan seri, penampil layar besar, dan tautan langsung ke tiap foto.
+- Pengelolaan seri, unggahan foto, keterangan, dan kredit fotografi.
 
-## Menjalankan secara lokal
+## Teknologi
 
-Siapkan Node.js 24 dan database PostgreSQL. Salin `.env.example` ke `.env` dan isi `DATABASE_URL`, `SESSION_SECRET`, `ADMIN_EMAIL`, dan `ADMIN_PASSWORD` (minimal 16 karakter).
+| Bagian | Teknologi |
+| --- | --- |
+| Bahasa | TypeScript, HTML, dan CSS |
+| Frontend | React, Vite, dan CSS Modules |
+| Backend | Node.js 24 dan Express |
+| Database | PostgreSQL dan Prisma ORM |
+
+## Coba secara lokal
+
+Siapkan Node.js 24 dan database PostgreSQL lokal. Salin [.env.example](.env.example) ke `.env` dan isi koneksi database, rahasia sesi acak, serta kredensial admin lokal. Gunakan kata sandi admin dengan minimal 16 karakter.
 
 ```sh
-node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 npm ci
 npm run db:migrate
 npm run db:seed
@@ -23,11 +30,16 @@ npm run admin:provision
 npm run dev
 ```
 
-Perintah pertama membuat rahasia sesi untuk `SESSION_SECRET`. Pengisian awal menyediakan enam foto dan dua seri contoh. `admin:provision` membuat atau mereset akun admin dan mengakhiri sesi sebelumnya. Mode pengembangan memakai [portofolio di port 5176](http://127.0.0.1:5176/) dan [studio admin](http://127.0.0.1:5176/admin).
-
-Untuk hasil build lokal, atur `APP_ORIGIN=http://127.0.0.1:4176`, jalankan `npm run build`, lalu `npm start`. Express menyajikan frontend dan REST API pada origin yang sama. Frontend memakai React, Vite, TypeScript, dan CSS Modules. Prisma mengelola koneksi dan migrasi PostgreSQL.
+Buka [portofolio lokal](http://127.0.0.1:5176/) atau [panel admin](http://127.0.0.1:5176/admin). Simpan konfigurasi asli di `.env` dan data privat seperti ekspor database atau unggahan pribadi di luar repositori atau di folder `.local/`.
 
 ## Kredit
 
-- Pengembangan oleh [guspriaman](https://github.com/guspriaman) untuk [guspriStack](https://github.com/guspristack).
-- Desain, potret generatif, dan foto sampel berasal dari prototipe Ruang Karya. Arka Wijaya adalah nama kredit konsep fiktif dalam seri sampel.
+- Pemilik dan pengembang proyek — [guspriaman](https://guspriaman.com/).
+- Studio pengembang — [GuspriStack](https://github.com/guspristack).
+- Materi contoh dari prototipe Ruang Karya — Desain galeri, potret generatif, dan seri foto contoh.
+
+## Lisensi
+
+Kode dan materi contoh orisinal milik guspriaman tersedia di bawah [PolyForm Noncommercial License 1.0.0](LICENSE). Anda boleh menggunakan, memodifikasi, dan membagikan materi tersebut untuk tujuan nonkomersial sesuai lisensi, dengan menyertakan [pemberitahuan hak cipta](NOTICE).
+
+Penjualan proyek atau versi modifikasinya, distribusi berbayar, dan penggunaan komersial memerlukan izin tertulis dari guspriaman. Dependensi dan aset pihak ketiga mengikuti lisensinya masing-masing.
